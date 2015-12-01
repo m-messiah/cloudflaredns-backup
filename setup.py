@@ -3,7 +3,7 @@ from os.path import join, dirname
 
 setup(
     name='cloudflaredns-backup',
-    version="1.2",
+    version="1.3",
     packages=['cloudflaredns_backup'],
     url='https://github.com/m-messiah/cloudflaredns-backup',
     license='MIT',

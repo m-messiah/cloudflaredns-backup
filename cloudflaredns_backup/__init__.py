@@ -49,16 +49,16 @@ class CloudFlareDns(object):
         return {
             zone['name']: self.get_pages("zones/%s/dns_records" % zone['id'])
             for zone in self.get_pages("zones")
-            if not zones or zone['name'] in zones
+            if not zones or zone['name'].encode("utf8") in zones
         }
 
     def bindify(self, zone):
         timestamp = datetime.now()
         result = [
-            ';; Domain: %s' % zone,
-            ';; Exported: %s' % timestamp.strftime("%Y-%m-%d %H:%M"),
-            '$ORIGIN %s.' % zone,
-            """@\t300\tSOA\t%s. hostmaster.%s. (
+            u';; Domain: %s' % zone,
+            u';; Exported: %s' % timestamp.strftime("%Y-%m-%d %H:%M"),
+            u'$ORIGIN %s.' % zone,
+            u"""@\t300\tSOA\t%s. hostmaster.%s. (
                                 %s ; Serial
                                 28800   ; Refresh
                                 7200    ; Retry
@@ -73,15 +73,15 @@ class CloudFlareDns(object):
             elif rec['type'] == 'CNAME':
                 content += "."
             elif rec['type'] == 'MX':
-                content = '\t'.join((str(rec['priority']), content))
-            result.append("\t".join((
+                content = u'\t'.join((str(rec['priority']), content))
+            result.append(u"\t".join((
                 rec['name'] + ".",
                 "300" if rec['ttl'] == 1 else str(rec['ttl']),
                 "IN",
                 rec['type'],
                 content
             )))
-        return "\n".join(result)
+        return u"\n".join(result)
 
 
 def backup_dns(email, token, zones, output):
@@ -98,7 +98,7 @@ def backup_dns(email, token, zones, output):
                 exit(1)
         for zone in cloudflare.zones:
             with open(path.join(output, zone), "w") as bind_file:
-                bind_file.write(cloudflare.bindify(zone))
+                bind_file.write(cloudflare.bindify(zone).encode("utf8"))
     else:
         for zone in cloudflare.zones:
             print(cloudflare.bindify(zone))
