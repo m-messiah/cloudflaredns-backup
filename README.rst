@@ -1,6 +1,15 @@
 CloudFlare DNS to RFC1035 converter 
 ================================
 
+.. image:: https://img.shields.io/pypi/v/cloudflaredns-backup.svg?style=flat-square
+    :target: https://pypi.python.org/pypi/cloudflaredns-backup
+    
+
+
+.. image:: https://img.shields.io/pypi/dm/cloudflaredns-backup.svg?style=flat-square
+        :target: https://pypi.python.org/pypi/cloudflaredns-backup
+
+
 Simple tool for backing up your CloudFlare hosted DNS records in format acceptable by BIND (RFC1035)
 
 Installation
