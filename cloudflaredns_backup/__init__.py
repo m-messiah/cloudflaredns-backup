@@ -49,7 +49,7 @@ class CloudFlareDns(object):
         return {
             zone['name']: self.get_pages("zones/%s/dns_records" % zone['id'])
             for zone in self.get_pages("zones")
-            if not zones or zone['name'].encode("utf8") in zones
+            if not zones or zone['name'] in zones
         }
 
     def bindify(self, zone):

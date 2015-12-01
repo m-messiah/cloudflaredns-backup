@@ -5,7 +5,7 @@ from cloudflaredns_backup import backup_dns
 __author__ = 'm_messiah'
 
 parser = ArgumentParser(
-        description="Backup CloudFlare DNS zones as files for BIND",
+        description="Backup CloudFlare DNS zones as files by RFC1035",
         formatter_class=RawDescriptionHelpFormatter,
         epilog="""EXAMPLES:
 
@@ -38,6 +38,6 @@ if args.verbose:
     logging.getLogger().setLevel(logging.DEBUG)
 
 if args.zones:
-    args.zones = " ".join(args.zones).split()
+    args.zones = u" ".join(args.zones).split()
 
 backup_dns(args.email, args.token, args.zones, args.output)
