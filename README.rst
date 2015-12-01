@@ -1,7 +1,12 @@
 CloudFlare DNS to Bind converter 
-====
+================================
 
 Simple tool for backing up your CloudFlare hosted DNS records in format acceptable by BIND
+
+Installation
+------------
+
+    pip install cloudflaredns-backup
 
 Usage
 -----
