@@ -1,14 +1,16 @@
 from distutils.core import setup
+from os.path import join, dirname
 
 setup(
     name='cloudflaredns-backup',
     version="1.0",
     packages=['cloudflaredns_backup'],
-    url='',
+    url='https://github.com/m-messiah/cloudflaredns-backup',
     license='MIT',
     author='m_messiah',
     author_email='m.muzafarov@gmail.com',
     description='CloudFlare DNS backup to BIND files',
+    long_description=open(join(dirname(__file__), 'README.rst')).read(),
     scripts=['scripts/cf-backup'],
     install_requires=[
         'requests',
