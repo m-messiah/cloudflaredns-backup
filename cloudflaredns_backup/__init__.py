@@ -87,7 +87,15 @@ class CloudFlareDns(object):
 def backup_dns(email, token, zones, output):
     cloudflare = CloudFlareDns(email, token, zones)
     if output:
-        makedirs(output, exist_ok=True)
+        try:
+            makedirs(output)
+        except OSError as exc:
+            from errno import EEXIST
+            if exc.errno == EEXIST and path.isdir(output):
+                pass
+            else:
+                logging.error("Can't create directory %s" % output)
+                exit(1)
         for zone in cloudflare.zones:
             with open(path.join(output, zone), "w") as bind_file:
                 bind_file.write(cloudflare.bindify(zone))
