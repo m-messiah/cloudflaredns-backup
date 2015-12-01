@@ -1,8 +1,10 @@
-# CloudFlare DNS to Bind converter
+CloudFlare DNS to Bind converter 
+====
 
 Simple tool for backing up your CloudFlare hosted DNS records in format acceptable by BIND
 
-# Usage
+Usage
+-----
 
 +   get all your CloudFlare zones to console
         
