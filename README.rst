@@ -1,7 +1,7 @@
-CloudFlare DNS to Bind converter 
+CloudFlare DNS to RFC1035 converter 
 ================================
 
-Simple tool for backing up your CloudFlare hosted DNS records in format acceptable by BIND
+Simple tool for backing up your CloudFlare hosted DNS records in format acceptable by BIND (RFC1035)
 
 Installation
 ------------
