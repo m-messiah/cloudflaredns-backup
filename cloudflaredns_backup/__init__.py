@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from os import makedirs, path
 from requests import Session
 from datetime import datetime
@@ -7,7 +5,6 @@ from datetime import datetime
 import logging
 
 __author__ = 'm_messiah'
-VERSION = "1.0"
 
 
 class CloudFlareDns(object):
@@ -98,44 +95,3 @@ def backup_dns(email, token, zones, output):
         for zone in cloudflare.zones:
             print(cloudflare.bindify(zone))
             print()
-
-
-if __name__ == '__main__':
-    parser = ArgumentParser(
-        description="Backup CloudFlare DNS zones as files for BIND",
-        formatter_class=RawDescriptionHelpFormatter,
-        epilog="""EXAMPLES:
-
-    %(prog)s root@example.com 1234567890
-        get all your CloudFlare zones to console
-
-    %(prog)s root@example.com 1234567890 -z example.com -z example2.com
-        get only example.com and example2.com zones.
-        This example may be simplified as:
-        %(prog)s root@example.com 1234567890 -z "example1.com example2.com"
-
-    %(prog)s root@example.com 1234567890 -z example.com -o zones
-        create if not exists folder and write zone to ./zones/example.com
-        """
-    )
-    parser.add_argument("email", help="CloudFlare user email")
-    parser.add_argument("token", help="CloudFlare API token")
-
-    parser.add_argument("-z", "--zones", action="append",
-                        help="List of exported zones (if omitted - export all)")
-
-    parser.add_argument("-o", "--output",
-                        help="Output directory for zones "
-                             "(if omitted write zones to stdout)")
-    parser.add_argument('--version', action='version', version=VERSION)
-    parser.add_argument('-v', '--verbose', action="store_true",
-                        help="Show debug logging. "
-                             "BE CAREFUL when use verbosity with STDOUT zones")
-    args = parser.parse_args()
-    if args.verbose:
-        logging.getLogger().setLevel(logging.DEBUG)
-
-    if args.zones:
-        args.zones = " ".join(args.zones).split()
-
-    backup_dns(args.email, args.token, args.zones, args.output)
