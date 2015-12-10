@@ -16,6 +16,8 @@ Simple tool for backing up your CloudFlare hosted DNS records in format acceptab
 Installation
 ------------
 
+.. code:: bash
+
     pip install cloudflaredns-backup
 
 Usage
