@@ -3,7 +3,7 @@ from os.path import join, dirname
 
 setup(
     name='cloudflaredns-backup',
-    version="1.4",
+    version="1.5",
     packages=['cloudflaredns_backup'],
     url='https://github.com/m-messiah/cloudflaredns-backup',
     license='MIT',
@@ -12,9 +12,7 @@ setup(
     description='CloudFlare DNS backup to BIND files',
     long_description=open(join(dirname(__file__), 'README.rst')).read(),
     scripts=['scripts/cf-backup'],
-    install_requires=[
-        'requests',
-    ],
+    install_requires=['requests'],
     keywords='cloudflare dns backup',
     classifiers=[
         # How mature is this project? Common values are
