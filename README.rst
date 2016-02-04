@@ -27,9 +27,11 @@ Usage
 
     .. code:: bash
 
-        cf-backup root@example.com 1234567890
+        cf-backup root@example.com 1234567890 # args
+        CF_EMAIL=root@example.com CF_TOKEN=1234567890 cf-backup # env
+        echo "root@example.com:1234567890" > credentials.cfg && cf-backup -c credentials.cfg # config file
 
-*   get only example.com and example2.com zones
+*   get only example.com and example2.com zones (here and other - just args examples. ENV and cred-file are same)
 
     .. code:: bash
 

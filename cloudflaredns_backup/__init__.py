@@ -97,7 +97,7 @@ def backup_dns(email, token, zones, output):
                 logging.error("Can't create directory %s" % output)
                 exit(1)
         for zone in cloudflare.zones:
-            with open(path.join(output, zone), "w") as bind_file:
+            with open(path.join(output, zone), "wb") as bind_file:
                 bind_file.write(cloudflare.bindify(zone).encode("utf8"))
     else:
         for zone in cloudflare.zones:
