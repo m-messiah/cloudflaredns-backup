@@ -43,9 +43,9 @@ Usage
 
         cf-backup root@example.com 1234567890 -z "example1.com example2.com"
 
-*   Get only example.com, create if not exists folder and write zone to ./zones/example.com
+*   Get only example.com, create if not exists folder and write zone to ./zones/example.com, and write NS in zone
 
     .. code:: bash
 
-        cf-backup root@example.com 1234567890 -z example.com -o zones
+        cf-backup root@example.com 1234567890 -z example.com -o zones --ns ns.example.com
 

@@ -8,7 +8,7 @@ __author__ = 'm_messiah'
 
 
 class CloudFlareDns(object):
-    def __init__(self, email, token, zones):
+    def __init__(self, email, token, zones, ns):
         self.conn = Session()
         self.conn.headers = {
             'X-Auth-Email': email,
@@ -16,6 +16,7 @@ class CloudFlareDns(object):
         }
         self.url = "https://api.cloudflare.com/client/v4/"
         self.zones = self.get_zones(zones)
+        self.ns = ns
 
     def get_pages(self, url):
         result = []
@@ -64,8 +65,12 @@ class CloudFlareDns(object):
                                 7200    ; Retry
                                 604800  ; Expire
                                 300)    ; Minimum TTL
-            """ % (zone, zone, timestamp.strftime("%Y%m%d%H%M")),
+            """ % (zone, zone, timestamp.strftime("%Y%m%d%H")),
         ]
+        if self.ns:
+            for ns in self.ns:
+                result.append("     IN NS %s." % ns)
+
         for rec in self.zones[zone]:
             content = rec['content']
             if rec['type'] in {'SPF', 'TXT'}:
