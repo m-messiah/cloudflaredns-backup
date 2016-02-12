@@ -89,8 +89,8 @@ class CloudFlareDns(object):
         return u"\n".join(result)
 
 
-def backup_dns(email, token, zones, output):
-    cloudflare = CloudFlareDns(email, token, zones)
+def backup_dns(email, token, zones, output, ns):
+    cloudflare = CloudFlareDns(email, token, zones, ns)
     if output:
         try:
             makedirs(output)
