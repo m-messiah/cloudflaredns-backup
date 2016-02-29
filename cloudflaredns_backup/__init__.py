@@ -56,8 +56,6 @@ class CloudFlareDns(object):
     def bindify(self, zone):
         timestamp = datetime.now()
         result = [
-            u';; Domain: %s' % zone,
-            u';; Exported: %s' % timestamp.strftime("%Y-%m-%d %H:%M"),
             u'$ORIGIN %s.' % zone,
             u"""@\t300\tSOA\t%s. hostmaster.%s. (
                                 %s ; Serial
