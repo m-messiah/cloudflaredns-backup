@@ -47,11 +47,11 @@ v1.1
 Python2 support
 
 v1.0b
-----
+-----
 
 PyPI package
 
 v1.0a
-----
+-----
 
 Python2-3 cloudflare backup tool
