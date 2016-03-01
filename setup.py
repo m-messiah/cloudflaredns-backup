@@ -10,7 +10,10 @@ setup(
     author='m_messiah',
     author_email='m.muzafarov@gmail.com',
     description='CloudFlare DNS backup to BIND files',
-    long_description=open(join(dirname(__file__), 'README.rst')).read(),
+    long_description="\n".join([
+        open(join(dirname(__file__), 'README.rst')).read(),
+        open(join(dirname(__file__), 'HISTORY.rst')).read()
+    ]),    
     scripts=['scripts/cf-backup'],
     install_requires=['requests'],
     keywords='cloudflare dns backup',

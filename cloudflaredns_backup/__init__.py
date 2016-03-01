@@ -33,7 +33,7 @@ class CloudFlareDns(object):
                 return result
 
             result.extend(resp['result'])
-            
+
             try:
                 total_pages = resp['result_info']['total_pages']
             except:

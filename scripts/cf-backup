@@ -11,7 +11,7 @@ parser = ArgumentParser(
         description="Backup CloudFlare DNS zones as files by RFC1035",
         formatter_class=RawDescriptionHelpFormatter,
         epilog="""
-    email and token may be passed by environment variables CF_EMAIL and CF_TOKEN
+    email and token may be passed by environment variables CF_EMAIL, CF_TOKEN
 
     EXAMPLES:
 
