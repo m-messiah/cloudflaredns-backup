@@ -28,8 +28,16 @@ class CloudFlareDns(object):
                               % (url, resp.status_code))
                 return result
             resp = resp.json()
+            if isinstance(resp['result'], dict):
+                result = resp['result']
+                return result
+
             result.extend(resp['result'])
-            total_pages = resp['result_info']['total_pages']
+            
+            try:
+                total_pages = resp['result_info']['total_pages']
+            except:
+                total_pages = 1
             if total_pages > 1:
                 logging.debug("Found %s pages on CloudFlare" % total_pages)
                 for page in range(2, total_pages + 1):
@@ -48,13 +56,19 @@ class CloudFlareDns(object):
 
     def get_zones(self, zones):
         return {
-            zone['name']: self.get_pages("zones/%s/dns_records" % zone['id'])
-            for zone in self.get_pages("zones")
+            zone['name']: {
+                'records': self.get_pages("zones/%s/dns_records" % zone['id']),
+                'info': self.get_pages("zones/%s" % zone['id'])
+            } for zone in self.get_pages("zones")
             if not zones or zone['name'] in zones
         }
 
     def bindify(self, zone):
-        timestamp = datetime.now()
+        print(self.zones[zone]['info'])
+        serial = datetime.strptime(
+            self.zones[zone]['info']['modified_on'],
+            "%Y-%m-%dT%H:%M:%S.%fZ"
+        ).strftime("%Y%m%d%H")
         result = [
             u'$ORIGIN %s.' % zone,
             u"""@\t300\tSOA\t%s. hostmaster.%s. (
@@ -63,13 +77,16 @@ class CloudFlareDns(object):
                                 7200    ; Retry
                                 604800  ; Expire
                                 300)    ; Minimum TTL
-            """ % (zone, zone, timestamp.strftime("%Y%m%d%H")),
+            """ % (zone, zone, serial),
         ]
+        for ns in self.zones[zone]['info']["name_servers"]:
+            result.append("         IN NS %s." % ns)
+
         if self.ns:
             for ns in self.ns:
-                result.append("     IN NS %s." % ns)
+                result.append("         IN NS %s." % ns)
 
-        for rec in self.zones[zone]:
+        for rec in self.zones[zone]['records']:
             content = rec['content']
             if rec['type'] in {'SPF', 'TXT'}:
                 content = "\"" + content + "\""
