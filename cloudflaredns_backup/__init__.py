@@ -64,11 +64,14 @@ class CloudFlareDns(object):
         }
 
     def bindify(self, zone):
-        print(self.zones[zone]['info'])
-        serial = datetime.strptime(
-            self.zones[zone]['info']['modified_on'],
-            "%Y-%m-%dT%H:%M:%S.%fZ"
-        ).strftime("%Y%m%d%H")
+        try:
+            timestamp = datetime.strptime(
+                self.zones[zone]['info']['modified_on'],
+                "%Y-%m-%dT%H:%M:%S.%fZ")
+        except:
+            timestamp = datetime.now()
+
+        serial = timestamp.strftime("%Y%m%d%H")
         result = [
             u'$ORIGIN %s.' % zone,
             u"""@\t300\tSOA\t%s. hostmaster.%s. (

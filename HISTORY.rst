@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v1.8
+----
+
+Serial is current timestamp if problems with "modified_on"
+
+
 v1.7.4
 ------
 
